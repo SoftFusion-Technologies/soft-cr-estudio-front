@@ -7,6 +7,11 @@ import CommunityManagerSection from '../components/sections/services/CommunityMa
 import MarketingRedesSection from '../components/sections/services/MarketingRedesSection';
 import BrandingSection from '../components/sections/services/BrandingSection';
 import FooterCR from '../components/sections/FooterCR';
+import VideoCreationSection from '../components/sections/services/VideoCreationSection';
+import VideoPhotographySection from '../components/sections/services/VideoPhotographySection';
+import FullProductionSection from '../components/sections/services/FullProductionSection';
+import Animation3DSection from '../components/sections/services/Animation3DSection';
+import WorkWithUsSection from '../components/sections/WorkWithUsSection';
 export default function Home() {
   const [introOpen, setIntroOpen] = useState(true);
 
@@ -34,12 +39,11 @@ export default function Home() {
         <CommunityManagerSection></CommunityManagerSection>
         <MarketingRedesSection></MarketingRedesSection>
         <BrandingSection></BrandingSection>
-        <section id="edicion-video" />
-        <section id="video-profesional" />
-        <section id="fotografia-profesional" />
-        <section id="produccion-completa" />
-        <section id="animacion-3d" />
-        <section id="contacto" />
+        <VideoCreationSection></VideoCreationSection>
+        <VideoPhotographySection></VideoPhotographySection>
+        <FullProductionSection></FullProductionSection>
+        <Animation3DSection></Animation3DSection>
+        <WorkWithUsSection></WorkWithUsSection>
       </main>
       <FooterCR></FooterCR>
     </div>
