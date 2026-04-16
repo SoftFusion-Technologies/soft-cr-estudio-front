@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/layout/Navbar';
 import BrandIntro from '../components/intro/BrandIntro';
 import HeroCR from '../components/sections/HeroCR';
@@ -14,18 +14,35 @@ import Animation3DSection from '../components/sections/services/Animation3DSecti
 import WorkWithUsSection from '../components/sections/WorkWithUsSection';
 import CRLinksModal from '../components/modals/CRLinksModal';
 import ConstanzaPresentationSection from '../components/sections/ConstanzaPresentationSection';
+import ServicesShowcaseCR from '../components/sections/ServicesShowcaseCR';
+
+/* Benjamin Orellana - 2026/04/16 - Keys de sesión para evitar repetir intro y modal al volver al inicio. */
+const CR_INTRO_SESSION_KEY = 'cr_intro_seen';
+const CR_LINKS_MODAL_SESSION_KEY = 'cr_links_modal_seen';
+
+/* Benjamin Orellana - 2026/04/16 - Lee flags persistidos de sesión para mantener experiencia consistente entre rutas. */
+const getSessionFlag = (key) => {
+  if (typeof window === 'undefined') return false;
+  return window.sessionStorage.getItem(key) === 'true';
+};
 
 export default function Home() {
-  const [introOpen, setIntroOpen] = useState(true);
-  const [brandFinished, setBrandFinished] = useState(false);
+  const [introOpen, setIntroOpen] = useState(
+    () => !getSessionFlag(CR_INTRO_SESSION_KEY)
+  );
+  const [brandFinished, setBrandFinished] = useState(() =>
+    getSessionFlag(CR_INTRO_SESSION_KEY)
+  );
   const [linksModalOpen, setLinksModalOpen] = useState(false);
 
-  /* Benjamin Orellana - 2026/04/16 - Abre la modal social 2 segundos después de terminar la intro para evitar choque visual con el BrandIntro. */
+  /* Benjamin Orellana - 2026/04/16 - Abre la modal social una sola vez por sesión luego de finalizar la intro. */
   useEffect(() => {
     if (!brandFinished) return;
+    if (getSessionFlag(CR_LINKS_MODAL_SESSION_KEY)) return;
 
     const timer = window.setTimeout(() => {
       setLinksModalOpen(true);
+      window.sessionStorage.setItem(CR_LINKS_MODAL_SESSION_KEY, 'true');
     }, 2000);
 
     return () => window.clearTimeout(timer);
@@ -38,6 +55,8 @@ export default function Home() {
       <BrandIntro
         open={introOpen}
         onDone={() => {
+          /* Benjamin Orellana - 2026/04/16 - Marca la intro como vista para no repetirla al regresar desde otras páginas. */
+          window.sessionStorage.setItem(CR_INTRO_SESSION_KEY, 'true');
           setIntroOpen(false);
           setBrandFinished(true);
         }}
@@ -68,15 +87,8 @@ export default function Home() {
       <main>
         <HeroCR />
         <ConstanzaPresentationSection autoRotateMs={5000} />
-
+        <ServicesShowcaseCR />
         <ValuePropositionCR></ValuePropositionCR>
-        <CommunityManagerSection></CommunityManagerSection>
-        <MarketingRedesSection></MarketingRedesSection>
-        <BrandingSection></BrandingSection>
-        <VideoCreationSection></VideoCreationSection>
-        <VideoPhotographySection></VideoPhotographySection>
-        <FullProductionSection></FullProductionSection>
-        <Animation3DSection></Animation3DSection>
         <WorkWithUsSection></WorkWithUsSection>
       </main>
       <FooterCR></FooterCR>
