@@ -88,8 +88,8 @@ export default function Home() {
         <HeroCR />
         <ConstanzaPresentationSection autoRotateMs={5000} />
         <ServicesShowcaseCR />
-        <ValuePropositionCR></ValuePropositionCR>
-        <WorkWithUsSection></WorkWithUsSection>
+        {/* <ValuePropositionCR></ValuePropositionCR> */}
+        {/* <WorkWithUsSection></WorkWithUsSection> */}
       </main>
       <FooterCR></FooterCR>
     </div>
